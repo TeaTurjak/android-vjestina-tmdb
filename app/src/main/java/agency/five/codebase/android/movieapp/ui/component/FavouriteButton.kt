@@ -10,31 +10,37 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Composable
-fun FavouriteButtonCard(
-    modifier: Modifier = Modifier,
-    favouriteState: Boolean
-) {
-    val favoriteRemember = remember { mutableStateOf(favouriteState) }
 
+@Composable
+fun FavouriteButton(
+    isFavourite: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    val isFavourite = remember { mutableStateOf(true) }
     Image(
-        painter = painterResource(id = if (favouriteState) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24),
+        painter = painterResource(id = if (isFavourite.value) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24),
         contentDescription = null,
-        modifier = modifier.clickable {
-                favoriteRemember.value = favoriteRemember.value.not()
-        }
+        modifier = modifier
             .size(50.dp)
             .background(Color.White, CircleShape)
+            .clip(CircleShape)
+            .clickable { isFavourite.value = isFavourite.value.not() }
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun FavouriteButtonCardPreview() {
-    FavouriteButtonCard(favouriteState = false)
+private fun FavouriteButtonPreview() {
+    var isFavouriteState = false
+    var isFavoriteState = remember { mutableStateOf(true) }
+    FavouriteButton(isFavourite = isFavouriteState,
+        onClick = { isFavouriteState != isFavouriteState }
+    )
 }
