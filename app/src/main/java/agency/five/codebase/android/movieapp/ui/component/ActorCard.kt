@@ -28,7 +28,7 @@ fun ActorCard(
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
-        modifier = Modifier
+        modifier = modifier
             .clip(RoundedCornerShape(6.dp))
             .wrapContentSize(),
     ) {

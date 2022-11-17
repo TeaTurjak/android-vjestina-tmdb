@@ -25,14 +25,14 @@ fun CrewMember(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .clip(RoundedCornerShape(6.dp))
             .wrapContentSize()
     ) {
         Column() {
             Text(
                 text = crewMemberViewState.name,
-                Modifier
+                modifier = Modifier
                     .padding(start = 5.dp, end = 5.dp, top = 5.dp)
                     .clip(RoundedCornerShape(6.dp)),
                 color = Color.Black,
@@ -41,7 +41,7 @@ fun CrewMember(
             )
             Text(
                 text = crewMemberViewState.job,
-                Modifier
+                modifier = Modifier
                     .padding(start = 5.dp, bottom = 5.dp, end = 5.dp, top = 5.dp)
                     .clip(RoundedCornerShape(6.dp)),
                 color = Color.Black,

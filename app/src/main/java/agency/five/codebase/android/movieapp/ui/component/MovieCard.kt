@@ -22,7 +22,6 @@ data class MovieCardViewState(
     val favouriteState: Boolean,
 )
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MovieCard(
     movieCardViewState: MovieCardViewState,
@@ -31,9 +30,8 @@ fun MovieCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = Modifier,
+        modifier = modifier.clickable { onCardClick() },
         shape = MaterialTheme.shapes.medium,
-        onClick = onCardClick
     ) {
         Box(modifier = Modifier) {
             AsyncImage(
@@ -46,6 +44,10 @@ fun MovieCard(
                 contentScale = ContentScale.Crop
             )
         }
+        FavouriteButton(
+            isFavourite = movieCardViewState.favouriteState,
+            onClick = { onLikeButtonClick }
+        )
     }
 }
 
@@ -53,14 +55,11 @@ fun MovieCard(
 @Composable
 private fun MovieCardPreview() {
     val movie = MoviesMock.getMoviesList()[0];
-    var onCardClick = remember { mutableStateOf(true) }
-    var onLikeButtonClick = remember { mutableStateOf(true) }
 
     MovieCard(movieCardViewState = MovieCardViewState(
         imageUrl = movie.imageUrl.toString(),
-        favouriteState = onLikeButtonClick.value
-    ),
-        onCardClick = { onCardClick != onCardClick },
-        onLikeButtonClick = { onLikeButtonClick != onLikeButtonClick }
+        favouriteState = movie.isFavorite),
+        onCardClick = { },
+        onLikeButtonClick = { }
     )
 }
