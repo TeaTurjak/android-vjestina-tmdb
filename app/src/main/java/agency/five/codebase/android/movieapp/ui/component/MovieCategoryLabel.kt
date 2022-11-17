@@ -50,7 +50,7 @@ fun MovieCategoryLabel(
             fontWeight = if (movieCategoryLabelUiState.isSelected) FontWeight.Bold else FontWeight.Normal,
             color = if (movieCategoryLabelUiState.isSelected) Color.Black else Color.Gray,
             fontSize = 18.sp,
-            modifier = modifier.clickable { onItemClick(movieCategoryLabelUiState) }
+            modifier = Modifier.clickable { onItemClick(movieCategoryLabelUiState) }
 
         )
         if (movieCategoryLabelUiState.isSelected) {

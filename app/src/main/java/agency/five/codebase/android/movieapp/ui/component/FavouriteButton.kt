@@ -27,7 +27,7 @@ fun FavouriteButton(
     Image(
         painter = painterResource(id = if (isFavourite.value) R.drawable.ic_baseline_favorite_24 else R.drawable.ic_baseline_favorite_border_24),
         contentDescription = null,
-        modifier = modifier
+        modifier = Modifier
             .size(50.dp)
             .background(Color.White, CircleShape)
             .clip(CircleShape)

@@ -31,12 +31,12 @@ fun UserScoreProgressBar(
 
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .size(50.dp)
                 .padding(5.dp)
 
         ) {
-            Canvas(modifier = modifier.fillMaxSize()) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
                 drawArc(
                     color = colorFullCircle,
                     startAngle = 0f,

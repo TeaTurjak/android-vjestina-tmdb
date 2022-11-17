@@ -28,24 +28,21 @@ fun ActorCard(
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
-        modifier = modifier,
+        modifier = Modifier
+            .clip(RoundedCornerShape(6.dp))
+            .wrapContentSize(),
     ) {
         Column(
-            modifier
-                .clip(RoundedCornerShape(6.dp))
-                .wrapContentSize(),
         ) {
             AsyncImage(
                 model = actorCardViewState.imageUrl,
                 contentDescription = null,
                 modifier = Modifier
-                    .width(100.dp)
                     .clip(RoundedCornerShape(6.dp))
             )
             Text(
                 text = actorCardViewState.name,
                 modifier = Modifier
-                    .width(100.dp)
                     .padding(start = 5.dp, end = 5.dp, top = 5.dp)
                     .clip(RoundedCornerShape(6.dp)),
                 color = Color.DarkGray,
@@ -54,7 +51,6 @@ fun ActorCard(
             Text(
                 text = actorCardViewState.character,
                 modifier = Modifier
-                    .width(100.dp)
                     .padding(start = 5.dp, bottom = 5.dp, end = 5.dp, top = 5.dp)
                     .clip(RoundedCornerShape(6.dp)),
                 color = Color.LightGray,

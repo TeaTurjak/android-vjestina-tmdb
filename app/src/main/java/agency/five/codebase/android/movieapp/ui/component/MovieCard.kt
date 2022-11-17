@@ -31,7 +31,7 @@ fun MovieCard(
     modifier: Modifier = Modifier,
 ) {
     Card(
-        modifier = modifier,
+        modifier = Modifier,
         shape = MaterialTheme.shapes.medium,
         onClick = onCardClick
     ) {
@@ -39,19 +39,12 @@ fun MovieCard(
             AsyncImage(
                 model = movieCardViewState.imageUrl,
                 contentDescription = movieCardViewState.imageUrl,
-                modifier
+                Modifier
                     .size(130.dp, 200.dp)
                     .clip(RoundedCornerShape(6.dp))
                     .fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-
-            FavouriteButton(
-                isFavourite = movieCardViewState.favouriteState,
-                onClick = onLikeButtonClick,
-                modifier.clickable { onLikeButtonClick() }
-            )
-
         }
     }
 }
