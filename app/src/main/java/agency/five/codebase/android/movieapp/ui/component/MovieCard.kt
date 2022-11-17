@@ -37,7 +37,7 @@ fun MovieCard(
             AsyncImage(
                 model = movieCardViewState.imageUrl,
                 contentDescription = movieCardViewState.imageUrl,
-                Modifier
+                modifier = Modifier
                     .size(130.dp, 200.dp)
                     .clip(RoundedCornerShape(6.dp))
                     .fillMaxSize(),

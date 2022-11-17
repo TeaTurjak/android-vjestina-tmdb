@@ -55,7 +55,7 @@ fun UserScoreProgressBar(
         }
         Text(
             text = (movieProgress * 10).toString(),
-            modifier = modifier.align(Alignment.Center),
+            modifier = Modifier.align(Alignment.Center),
             color = Color.Black,
             fontWeight = FontWeight.ExtraBold,
             fontSize = 12.sp
