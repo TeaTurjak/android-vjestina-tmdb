@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">MovieApp</string>
+    <string name="POPULAR">What's popular</string>
+    <string name="POPULAR_STREAMING">Streaming</string>
+    <string name="POPULAR_ON_TV">On TV</string>
+    <string name="POPULAR_FOR_RENT">For rent</string>
+    <string name="POPULAR_IN_THEATRES">In theatres</string>
+    <string name="NOW_PLAYING">Now playing</string>
+    <string name="NOW_PLAYING_MOVIES">Movies</string>
+    <string name="NOW_PLAYING_TV">TV</string>
+    <string name="UPCOMING">Upcoming</string>
+    <string name="UPCOMING_TODAY">Today</string>
+    <string name="UPCOMING_THISS_WEEK">This week</string>
+    <string name="HOME_BUTTON">Home</string>
+    <string name="FAVORITE_BUTTON">Favorites</string>
+    <string name="home">Home</string>
+    <string name="favorites">Favorites</string>
 </resources>
