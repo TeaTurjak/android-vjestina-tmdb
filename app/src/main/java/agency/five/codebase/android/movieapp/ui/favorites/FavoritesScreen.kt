@@ -4,7 +4,6 @@ import agency.five.codebase.android.movieapp.mock.MoviesMock
 import agency.five.codebase.android.movieapp.ui.component.MovieCard
 import agency.five.codebase.android.movieapp.ui.favorites.mapper.FavoritesMapper
 import agency.five.codebase.android.movieapp.ui.favorites.mapper.FavoritesMapperImpl
-import agency.five.codebase.android.movieapp.ui.home.HomeMovieViewState
 import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -30,24 +29,20 @@ val favoritesViewState = favoritesMapper.toFavoritesViewState(MoviesMock.getMovi
 
 @Composable
 fun FavoritesRoute(
-    onMovieClick: () -> Unit,
-    onLikeButtonClick: () -> Unit,
-    onNavigateToMovieDetails: (HomeMovieViewState) -> Unit,
+    onNavigateToMovieDetails: (Int) -> Unit,
 ) {
     val favorite by remember { mutableStateOf(favoritesViewState) }
     FavoritesScreen(
         favoritesViewState = favorite,
         modifier = Modifier.fillMaxSize(),
-        onLikeButtonClick = { onLikeButtonClick() },
-        onMovieClick = { onMovieClick() })
+        onMovieClick = onNavigateToMovieDetails
 }
 
 @Composable
 fun FavoritesScreen(
     favoritesViewState: FavoritesViewState,
     modifier: Modifier,
-    onMovieClick: () -> Unit,
-    onLikeButtonClick: () -> Unit,
+    onMovieClick: (Int) -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -74,8 +69,10 @@ fun FavoritesScreen(
                         modifier = Modifier
                             .width(130.dp)
                             .height(200.dp),
-                        onCardClick = onMovieClick,
-                        onLikeButtonClick = onLikeButtonClick,
+                        onCardClick = { onMovieClick(card.id) },
+                        onLikeButtonClick = {
+                            card.movieCardViewState.favouriteState.not()
+                        },
                     )
                 }
             }
@@ -91,7 +88,6 @@ fun FavoritesScreenPreview() {
             favoritesViewState = favoritesViewState,
             modifier = Modifier,
             onMovieClick = {},
-            onLikeButtonClick = {},
         )
     }
 }

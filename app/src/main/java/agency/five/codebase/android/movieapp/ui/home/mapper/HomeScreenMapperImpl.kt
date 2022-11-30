@@ -14,51 +14,33 @@ class HomeScreenMapperImpl : HomeScreenMapper {
         selectedMovieCategory: MovieCategory,
         movies: List<Movie>
     ): HomeMovieCategoryViewState {
-        val movieViewState = mutableListOf<HomeMovieViewState>()
-        val category = mutableListOf<MovieCategoryLabelViewState>()
-
-        for (eachMovieCategory in movieCategories) {
-            category.add(
-                MovieCategoryLabelViewState(
-                    itemId = eachMovieCategory.ordinal,
-                    isSelected = selectedMovieCategory == eachMovieCategory,
-                    categoryText = MovieCategoryLabelTextViewState.TextRes(
-                        resourceText(
-                            eachMovieCategory
-                        )
-                    )
-                )
+        return HomeMovieCategoryViewState(movieCategories.map { category ->
+            MovieCategoryLabelViewState(
+                itemId = category.ordinal,
+                categoryText = MovieCategoryLabelTextViewState.TextRes(resourceText(category)),
+                isSelected = category == selectedMovieCategory
             )
-        }
-
-        for (eachMovie in movies) {
-            movieViewState.add(
-                HomeMovieViewState(
-                    id = eachMovie.id,
-                    imageUrl = eachMovie.imageUrl,
-                    isFavorite = eachMovie.isFavorite
-                )
+        }, movies.map { movie ->
+            HomeMovieViewState(
+                movie.id, movie.isFavorite, movie.imageUrl
             )
-        }
-
-        return HomeMovieCategoryViewState(category, movieViewState)
+        })
     }
 
-}
-
-fun resourceText(
-    movieCategoryMatches: MovieCategory
-): Int {
-    return when (movieCategoryMatches) {
-        MovieCategory.POPULAR_STREAMING -> R.string.POPULAR_STREAMING
-        MovieCategory.POPULAR_ON_TV -> R.string.POPULAR_ON_TV
-        MovieCategory.POPULAR_FOR_RENT -> R.string.POPULAR_FOR_RENT
-        MovieCategory.POPULAR_IN_THEATRES -> R.string.POPULAR_IN_THEATRES
-        MovieCategory.NOW_PLAYING_MOVIES -> R.string.NOW_PLAYING_MOVIES
-        MovieCategory.NOW_PLAYING_TV -> R.string.NOW_PLAYING_TV
-        MovieCategory.UPCOMING_TODAY -> R.string.UPCOMING_TODAY
-        MovieCategory.UPCOMING_THIS_WEEK -> R.string.UPCOMING_THISS_WEEK
+    private fun resourceText(movieCategoryMatches: MovieCategory): Int {
+        return when (movieCategoryMatches) {
+            MovieCategory.POPULAR_STREAMING -> R.string.POPULAR_STREAMING
+            MovieCategory.POPULAR_ON_TV -> R.string.POPULAR_ON_TV
+            MovieCategory.POPULAR_FOR_RENT -> R.string.POPULAR_FOR_RENT
+            MovieCategory.POPULAR_IN_THEATRES -> R.string.POPULAR_IN_THEATRES
+            MovieCategory.NOW_PLAYING_MOVIES -> R.string.NOW_PLAYING_MOVIES
+            MovieCategory.NOW_PLAYING_TV -> R.string.NOW_PLAYING_TV
+            MovieCategory.UPCOMING_TODAY -> R.string.UPCOMING_TODAY
+            MovieCategory.UPCOMING_THIS_WEEK -> R.string.UPCOMING_THISS_WEEK
+        }
     }
 }
+
+
 
 

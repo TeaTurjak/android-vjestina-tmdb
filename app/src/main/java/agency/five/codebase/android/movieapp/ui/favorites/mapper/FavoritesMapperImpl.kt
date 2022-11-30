@@ -4,25 +4,19 @@ import agency.five.codebase.android.movieapp.model.Movie
 import agency.five.codebase.android.movieapp.ui.component.MovieCardViewState
 import agency.five.codebase.android.movieapp.ui.favorites.FavoritesMovieViewState
 import agency.five.codebase.android.movieapp.ui.favorites.FavoritesViewState
+import agency.five.codebase.android.movieapp.ui.moviedetails.movieDetailsViewState
 
 class FavoritesMapperImpl : FavoritesMapper {
 
-    private var favoritesMovieViewState = mutableListOf<FavoritesMovieViewState>()
+    override fun toFavoritesViewState(favoriteMovies: List<Movie>): FavoritesViewState =
+        FavoritesViewState(
+            favoriteMoviesList = favoriteMovies.map(::toFavoritesMovieViewState)
+        )
 
-    override fun toFavoritesViewState(favoriteMovies: List<Movie>): FavoritesViewState {
-        for (eachMovie in favoriteMovies) {
-            var movieCardViewState =
-                MovieCardViewState(eachMovie.imageUrl!!, eachMovie.isFavorite)
-            if (movieCardViewState.favouriteState) {
-                favoritesMovieViewState.add(
-                    FavoritesMovieViewState(
-                        eachMovie.id,
-                        movieCardViewState
-                    )
-                )
-            }
-        }
-        return FavoritesViewState(favoritesMovieViewState)
-    }
+    private fun toFavoritesMovieViewState(favoriteMovie: Movie) =
+        FavoritesMovieViewState(
+            id = favoriteMovie.id,
+            movieCardViewState = MovieCardViewState(movieDetailsViewState.imageUrl, movieDetailsViewState.isFavorite)
+    )
 
 }

@@ -31,8 +31,9 @@ import androidx.compose.material.*
 fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    var showBottomBar by remember {
-        mutableStateOf(true)
+    val showBottomBar = when (navBackStackEntry?.destination?.route) {
+        MovieDetailsDestination.route -> false
+        else -> true
     }
     val showBackIcon = !showBottomBar
     Scaffold(
@@ -73,7 +74,6 @@ fun MainScreen() {
                 modifier = Modifier.padding(padding)
             ) {
                 composable(NavigationItem.HomeDestination.route) {
-                    showBottomBar = true
                     HomeRoute(
                         onNavigateToMovieDetails = { navigationItem ->
                             navController.navigate(
@@ -85,22 +85,18 @@ fun MainScreen() {
                     )
                 }
                 composable(NavigationItem.FavoritesDestination.route) {
-                    showBottomBar = true
                     FavoritesRoute(
                         onNavigateToMovieDetails = { navigationItem ->
                             navController.navigate(
-                                MovieDetailsDestination.createNavigationRoute(navigationItem.id)
+                                MovieDetailsDestination.createNavigationRoute(navigationItem)
                             )
-                        },
-                        onLikeButtonClick = {},
-                        onMovieClick = {}
+                        }
                     )
                 }
                 composable(
                     route = MovieDetailsDestination.route,
                     arguments = listOf(navArgument(MOVIE_ID_KEY) { type = NavType.IntType }),
                 ) {
-                    showBottomBar = true
                     MovieRoute()
                 }
             }

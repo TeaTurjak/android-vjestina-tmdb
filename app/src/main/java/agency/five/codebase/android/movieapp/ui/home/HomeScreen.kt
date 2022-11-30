@@ -62,7 +62,6 @@ fun HomeRoute(
     modifier: Modifier = Modifier,
     onMovieClick: () -> Unit,
     onLikeButtonClick: () -> Unit,
-    //onCategoryClick: (MovieCategoryLabelViewState) -> Unit,
     onNavigateToMovieDetails: (HomeMovieViewState) -> Unit
 ) {
     var popularMovies by remember { mutableStateOf(popularCategoryViewState) }
@@ -78,7 +77,11 @@ fun HomeRoute(
         onLikeButtonClick = onLikeButtonClick,
         onCategoryClick = {
             when (it.itemId) {
-                0, 1, 2, 3 -> popularMovies =
+                MovieCategory.POPULAR_STREAMING.ordinal,
+                MovieCategory.POPULAR_FOR_RENT.ordinal,
+                MovieCategory.POPULAR_ON_TV.ordinal,
+                MovieCategory.POPULAR_IN_THEATRES.ordinal,
+                 -> popularMovies =
                     homeScreenMapper.toHomeMovieCategoryViewState(
                         listOf(
                             MovieCategory.POPULAR_STREAMING,
@@ -89,7 +92,9 @@ fun HomeRoute(
                         MovieCategory.values()[it.itemId],
                         getMoviesList()
                     )
-                4, 5 -> nowMovies =
+                MovieCategory.NOW_PLAYING_TV.ordinal,
+                MovieCategory.NOW_PLAYING_MOVIES.ordinal
+                -> nowMovies =
                     homeScreenMapper.toHomeMovieCategoryViewState(
                         listOf(
                             MovieCategory.NOW_PLAYING_TV,

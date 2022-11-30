@@ -1,15 +1,19 @@
 package agency.five.codebase.android.movieapp.ui.moviedetails
 
 import agency.five.codebase.android.movieapp.mock.MoviesMock
+import agency.five.codebase.android.movieapp.model.Movie
+import agency.five.codebase.android.movieapp.model.MovieDetails
 import agency.five.codebase.android.movieapp.ui.component.*
 import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapper
 import agency.five.codebase.android.movieapp.ui.moviedetails.mapper.MovieDetailsMapperImpl
 import agency.five.codebase.android.movieapp.ui.theme.MovieAppTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,9 +34,7 @@ private val movieDetailsMapper: MovieDetailsMapper = MovieDetailsMapperImpl()
 val movieDetailsViewState = movieDetailsMapper.toMovieDetailsViewState(MoviesMock.getMovieDetails())
 
 @Composable
-fun MovieRoute(
-// actions
-) {
+fun MovieRoute() {
     val movieDetailsViewState by remember { mutableStateOf(movieDetailsViewState) }
 
     MovieScreen(
@@ -47,21 +49,22 @@ fun MovieScreen(
     Column() {
         MoviePreview(movieDetailsViewState)
         OverviewOfMovie(movieDetailsViewState)
-        CrewList(movieDetailsViewState)
-        ActorList(movieDetailsViewState)
+        CrewList(movieDetailsViewState.crew)
+        ActorList(movieDetailsViewState.cast)
     }
 }
 
 @Composable
 fun MoviePreview(
-    movieDetailsViewState: MovieDetailsViewState
+    movieDetailsViewState: MovieDetailsViewState,
+    modifier: Modifier = Modifier,
 ) {
     Box(
     ) {
         AsyncImage(
             model = movieDetailsViewState.imageUrl,
             contentDescription = movieDetailsViewState.title,
-            modifier = Modifier.fillMaxSize()
+            modifier = modifier.fillMaxSize()
         )
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -95,50 +98,48 @@ fun MoviePreview(
 }
 
 @Composable
-fun ActorList(
-    movieDetailsViewState: MovieDetailsViewState
+private fun ActorList(
+    cast: List<ActorViewState>,
+    modifier: Modifier = Modifier,
 ) {
     Column(
     ) {
         Text(
             text = "Top billed cast",
-            modifier = Modifier
+            modifier = modifier
                 .padding(5.dp),
             fontSize = 20.sp,
             color = Color.Black,
             fontStyle = FontStyle.Normal,
             fontWeight = FontWeight.Bold
         )
-        LazyHorizontalGrid(
-            rows = GridCells.Fixed(1),
-            content = {
-                items(
-                    items = movieDetailsViewState.cast,
-                    key = { cast -> cast.id }
-                ) { cast ->
-                    ActorCard(
-                        actorCardViewState = ActorCardViewState(
-                            cast.name,
-                            cast.character,
-                            cast.imageUrl.toString()
-                        )
+        LazyRow() {
+            items(
+                items = cast,
+                key = { cast -> cast.id }
+            ) { cast ->
+                ActorCard(
+                    actorCardViewState = ActorCardViewState(
+                        cast.name,
+                        cast.character,
+                        cast.imageUrl.toString()
                     )
-                }
+                )
             }
-        )
-
+        }
     }
 }
 
 @Composable
-fun CrewList(
-    movieDetailsViewState: MovieDetailsViewState
+private fun CrewList(
+    crew: List<CrewmanViewState>,
+    modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
         content = {
             items(
-                items = movieDetailsViewState.crew,
+                items = crew,
                 key = { crew -> crew.id }
             ) { crew ->
                 CrewMember(
@@ -154,14 +155,15 @@ fun CrewList(
 
 
 @Composable
-fun OverviewOfMovie(
-    movieDetailsViewState: MovieDetailsViewState
+private fun OverviewOfMovie(
+    movieDetailsViewState: MovieDetailsViewState,
+    modifier: Modifier = Modifier,
 ) {
     Column(
     ) {
         Text(
             text = "Overview",
-            modifier = Modifier
+            modifier = modifier
                 .padding(5.dp),
             fontSize = 20.sp,
             color = Color.Black,
